@@ -1,11 +1,11 @@
 #!/bin/bash -x
 
-docker run -ti --tmpfs /tmp --tmpfs /run \
+podman run -d \
 	--name targetclid \
-	-td \
 	-v /lib/modules:/lib/modules \
 	-v /var/run/dbus:/var/run/dbus \
-	-v /sys/kernel/config:/sys/kernel/config \
-	-v disks:/disks \
-	--privileged --security-opt label=disable \
-        targetcli
+  -v /sys/kernel/config:/sys/kernel/config \
+	-v /dev/vdb:/dev/vdb \
+	--privileged --cap-add=CAP_SYS_MODULE \
+	-p 3260:3260 \
+	targetcli
