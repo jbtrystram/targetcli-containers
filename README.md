@@ -57,7 +57,11 @@ sudo blkid /dev/sdc*                                                            
 
 # Sources
 https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/managing_storage_devices/configuring-an-iscsi-target_managing-storage-devices#installing-targetcli_configuring-an-iscsi-target
+
 https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/managing_storage_devices/configuring-an-iscsi-initiator_managing-storage-devices
 
 https://medium.com/oracledevs/kvm-iscsi-part-i-iscsi-boot-with-ipxe-f533f2666075
+
 https://cleech.github.io/blog/2013/11/05/booting-virtual-machines-using-iscsi-part-2/
+
+https://developers.redhat.com/blog/2019/04/24/how-to-run-systemd-in-a-container?source=sso
