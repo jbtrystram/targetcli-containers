@@ -1,0 +1,24 @@
+[Unit]
+Description=Targetd container
+Documentation=https://github.com/jbtrystram/targetcli-containers
+After=local-fs.target
+
+[Container]
+Image=quay.io/jbtrystram/targetcli:latest
+ContainerName=target
+AddCapability=CAP_SYS_MODULE
+Network=host
+Volume=/lib/modules:/lib/modules
+Volume=/var/run/dbus:/var/run/dbus
+Volume=/sys/kernel/config:/sys/kernel/config
+Volume=/dev/vdb:/dev/vdb
+PodmanArgs=--privileged
+
+[Install]
+# Start by default on boot
+WantedBy=multi-user.target default.target
+
+
+[Service]
+# Extend Timeout to allow time to pull the image
+TimeoutStartSec=900

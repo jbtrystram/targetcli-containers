@@ -22,7 +22,7 @@ My use case here is to mount a CoreOS raw image disk as a virtual disk in a QEMU
 	-v /dev/vdb:/dev/vdb \
 	--privileged --cap-add=CAP_SYS_MODULE \
 	--net host \
-	targetcli
+	quay.io/jbtrystram/targetcli
 ```
 
 Note: `--net host` is used here because `-p 3260:3260` made the LUN to bind to the container network address.
