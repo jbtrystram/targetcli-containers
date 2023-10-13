@@ -2,6 +2,7 @@
   "fabric_modules": [],
   "storage_objects": [
     {
+      "aio": false,
       "alua_tpgs": [
         {
           "alua_access_state": 0,
@@ -38,29 +39,29 @@
         "emulate_tpu": 0,
         "emulate_tpws": 0,
         "emulate_ua_intlck_ctrl": 0,
-        "emulate_write_cache": 0,
+        "emulate_write_cache": 1,
         "enforce_pr_isids": 1,
         "force_pr_aptpl": 0,
         "is_nonrot": 0,
         "max_unmap_block_desc_count": 1,
-        "max_unmap_lba_count": 4194303,
-        "max_write_same_len": 4194303,
-        "optimal_sectors": 4294967288,
+        "max_unmap_lba_count": 8192,
+        "max_write_same_len": 4096,
+        "optimal_sectors": 16384,
         "pgr_support": 1,
         "pi_prot_format": 0,
         "pi_prot_type": 0,
         "pi_prot_verify": 0,
-        "queue_depth": 256,
+        "queue_depth": 128,
         "unmap_granularity": 1,
         "unmap_granularity_alignment": 0,
         "unmap_zeroes_data": 0
       },
-      "dev": "/dev/vdb",
-      "name": "coreOS",
-      "plugin": "block",
-      "readonly": false,
-      "write_back": false,
-      "wwn": "9ff0e629-cea3-4182-9c16-c329d776557e"
+      "dev": "/fcos.raw",
+      "name": "coreos",
+      "plugin": "fileio",
+      "size": 2559574016,
+      "write_back": true,
+      "wwn": "40efdb61-4e52-46be-bbd3-9032e9c20674"
     }
   ],
   "targets": [
@@ -73,13 +74,13 @@
         {
           "attributes": {
             "authentication": 0,
-            "cache_dynamic_acls": 1,
+            "cache_dynamic_acls": 0,
             "default_cmdsn_depth": 64,
             "default_erl": 0,
             "demo_mode_discovery": 1,
-            "demo_mode_write_protect": 0,
+            "demo_mode_write_protect": 1,
             "fabric_prot_type": 0,
-            "generate_node_acls": 1,
+            "generate_node_acls": 0,
             "login_keys_workaround": 1,
             "login_timeout": 15,
             "netif_timeout": 2,
@@ -90,10 +91,10 @@
           "enable": true,
           "luns": [
             {
-              "alias": "bb8111304f",
+              "alias": "af01c0a7ef",
               "alua_tg_pt_gp_name": "default_tg_pt_gp",
               "index": 0,
-              "storage_object": "/backstores/block/coreOS"
+              "storage_object": "/backstores/fileio/coreos"
             }
           ],
           "node_acls": [],
@@ -131,7 +132,7 @@
           "tag": 1
         }
       ],
-      "wwn": "iqn.2023-09.centos.vm:coreos"
+      "wwn": "iqn.2023-10.coreos.target.vm:coreos"
     }
   ]
 }

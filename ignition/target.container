@@ -2,6 +2,7 @@
 Description=Targetd container
 Documentation=https://github.com/jbtrystram/targetcli-containers
 After=local-fs.target
+ConditionPathExists=/var/shared/
 
 [Container]
 Image=quay.io/jbtrystram/targetcli:latest
@@ -11,14 +12,14 @@ Network=host
 Volume=/lib/modules:/lib/modules
 Volume=/var/run/dbus:/var/run/dbus
 Volume=/sys/kernel/config:/sys/kernel/config
-Volume=/dev/vdb:/dev/vdb
+Volume=/var/shared:/var/shared/
 PodmanArgs=--privileged
 
 [Install]
 # Start by default on boot
 WantedBy=multi-user.target default.target
-After=network-online.target
-Wants=network-online.target
+After=network-online.target, shared-virtiofs.mount
+Wants=network-online.target, shared-virtiofs.mount
 
 [Service]
 # Extend Timeout to allow time to pull the image

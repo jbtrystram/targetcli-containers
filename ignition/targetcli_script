@@ -1,0 +1,6 @@
+#!/bin/bash
+
+podman exec target targetcli /backstores/fileio create coreos /fcos.raw
+podman exec target targetcli iscsi/ create iqn.2023-10.coreos.target.vm:coreos
+podman exec target targetcli iscsi/iqn.2023-10.coreos.target.vm:coreos/tpg1/ set attribute authentication=0
+podman exec target targetcli iscsi/iqn.2023-10.coreos.target.vm:coreos/tpg1/luns create /backstores/fileio/coreos

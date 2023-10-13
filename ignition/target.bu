@@ -5,3 +5,34 @@ storage:
     - path: /etc/containers/systemd/target.container
       contents:
         local: target.container
+    - path: /targetcli_script
+      contents:
+        local: targetcli_script
+      mode: 0755
+systemd:
+  units:
+    - name: shared-virtiofs.mount
+      enabled: true
+      contents: |
+          [Unit]
+          Description=Mount virtiofs shared filesystem
+          [Mount]
+          What=var-shared
+          Where=/var/shared/
+          Type=virtiofs
+          [Install]
+          WantedBy=multi-user.target
+    - name: setup-targetcli.service
+      enabled: true
+      contents: |
+          [Unit]
+          Description=Setup targetcli
+          ConditionPathExists=/var/shared/fcos.raw
+          Requires=target.container
+          After=target.container
+          [Service]
+          Type=oneshot
+          RemainAfterExit=yes
+          ExecStart=/targetcli_script
+          [Install]
+          WantedBy=multi-user.target

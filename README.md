@@ -9,8 +9,9 @@ This **MUST** be run as root.
 ```
 
 ## Volumes
-The config in `saveconfig.json` expose `/dev/vdb` as a backstore. 
-My use case here is to mount a CoreOS raw image disk as a virtual disk in a QEMU VM that act as the iSCSI server.
+The config in `saveconfig.json` expose `/var/shared/fcos.raw` as a fileio backstore.
+See [`targetcli commands`](targetcli_script) to see the details.
+My use case here is to mount a CoreOS raw image disk in a QEMU VM through virtiofs. This VM act as the iSCSI server.
 
 ## Run the container and exec to create the disks
 ```bash
@@ -19,7 +20,7 @@ My use case here is to mount a CoreOS raw image disk as a virtual disk in a QEMU
 	-v /lib/modules:/lib/modules \
 	-v /var/run/dbus:/var/run/dbus \
     -v /sys/kernel/config:/sys/kernel/config \
-	-v /dev/vdb:/dev/vdb \
+	-v /var/shared/fcos.raw:/fcos.raw \
 	--privileged --cap-add=CAP_SYS_MODULE \
 	--net host \
 	quay.io/jbtrystram/targetcli
