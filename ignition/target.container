@@ -2,7 +2,9 @@
 Description=Targetd container
 Documentation=https://github.com/jbtrystram/targetcli-containers
 After=local-fs.target
-ConditionPathExists=/var/shared/
+ConditionPathExists=/var/mnt/workdir-tmp
+After=network-online.target
+Wants=network-online.target
 
 [Container]
 Image=quay.io/jbtrystram/targetcli:latest
@@ -10,16 +12,13 @@ ContainerName=target
 AddCapability=CAP_SYS_MODULE
 Network=host
 Volume=/lib/modules:/lib/modules
-Volume=/var/run/dbus:/var/run/dbus
 Volume=/sys/kernel/config:/sys/kernel/config
-Volume=/var/shared:/var/shared/
+Volume=/var/mnt/workdir-tmp/:/var/mnt/workdir-tmp/
 PodmanArgs=--privileged
 
 [Install]
 # Start by default on boot
-WantedBy=multi-user.target default.target
-After=network-online.target, shared-virtiofs.mount
-Wants=network-online.target, shared-virtiofs.mount
+WantedBy=multi-user.target
 
 [Service]
 # Extend Timeout to allow time to pull the image
