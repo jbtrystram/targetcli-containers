@@ -11,7 +11,7 @@ storage:
       mode: 0755
 systemd:
   units:
-    - name: shared-virtiofs.mount
+    - name: var-shared-virtiofs.mount
       enabled: true
       contents: |
           [Unit]
