@@ -9,10 +9,11 @@ This is still a work in progress
 flowchart BT
     A(iSCSI Target)
     B[FCOS VM] --> |container volume| A
-    C(COSA) --> D
-    C --> |virtioFS| B 
+    B --> E
+    E(COSA) --> D
+    C(COSA) --> |virtioFS| B 
     D[diskless VM] <--> |netboot| A
-    R{HOST RAW image} --> |container volume| C
+    R{{HOST RAW image}} --> |container volume| C
 ```
 
 ## target container
@@ -92,17 +93,8 @@ Then boot !
 ```
 podman run -ti --privileged --net=host --rm -v /mnt/workdir:/mnt/workdir \
 quay.io/coreos-assembler/coreos-assembler shell -- \
-kola qemuexec --netboot /mnt/workdir/tmp/boot.ipxe --usernet-addr 10.0.3.0/24 -boot order=n
+kola qemuexec --netboot /mnt/workdir/tmp/boot.ipxe --usernet-addr 10.0.3.0/24
 ```
-Note : you will need https://github.com/coreos/coreos-assembler/pull/3645
-
-Without the above PRs : 
-```
-podman run -ti --privileged --net=host --rm -v /mnt/workdir:/mnt/workdir \
-quay.io/coreos-assembler/coreos-assembler shell -- \
-kola qemuexec -- -netdev user,id=iscsi,tftp=/mnt/workdir-tmp/,bootfile=boot.ipxe,net=10.0.3.0/24 -boot n
-```
-
 
 At this point, you should get a GRUB screen, pulled from that initial `metal raw` file, booted off iscsi ! Happy hacking.
 
