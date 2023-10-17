@@ -13,16 +13,4 @@ systemd:
   units:
     - name: setup-targetcli.service
       enabled: true
-      contents: |
-          [Unit]
-          Description=Setup targetcli
-          ConditionPathExists=/var/mnt/workdir-tmp/fcos.raw
-          Requires=target.service
-          After=target.service
-          ConditionFirstBoot=true
-          [Service]
-          Type=oneshot
-          RemainAfterExit=yes
-          ExecStart=/usr/local/bin/targetcli_script
-          [Install]
-          WantedBy=multi-user.target
+      contents_local: setup-targetcli.service

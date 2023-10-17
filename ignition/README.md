@@ -25,17 +25,13 @@ IGNITION_FILE=path/to/target.ign
 # virt-install --connect="qemu:///system" --name="fcos-target" --vcpus=2 --memory=2048                      \
     --os-variant="fedora-coreos-stable" --import --graphics=none                                            \
     --disk="size=10,backing_store=${FCOS_IMAGE}"                                                            \
-    --network bridge=virbr0 --qemu-commandline="-fw_cfg name=opt/com.coreos/config,file=${IGNITION_FILE}"     \
+    --network bridge=virbr0 --qemu-commandline="-fw_cfg name=opt/com.coreos/config,file=${IGNITION_FILE}"   \
     --filesystem=${RAW_DISK},var-shared,driver.type=virtiofs                                                \
     --memorybacking=source.type=memfd,access.mode=shared
 ```
 
 Here we use the virtioFS filesystem to mount the coreOS raw disk image into the VM. 
 
-# TODO / ideas
-
-- [] iPXE boot script
-- [] add a DHCP service as well (to help iPXE boot)
 
 # Resources
 
