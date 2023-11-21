@@ -9,6 +9,17 @@ storage:
       contents:
         local: targetcli_script
       mode: 0755
+    - path: /mnt/temp/boot.ipxe
+      contents:
+        local: boot.ipxe
+      mode: 0644  
+    - path: /etc/containers/systemd/iscsi-boot.container
+      contents:
+        local: iscsi-boot.container
+    - path: /usr/local/bin/bootup-validator
+      mode: 0755
+      contents:
+        local: bootup-validator.sh
 systemd:
   units:
     - name: setup-targetcli.service

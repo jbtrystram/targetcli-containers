@@ -1,0 +1,3 @@
+#!ipxe
+set initiator-iqn iqn.2023-11.coreos.diskless:testsetup
+sanboot iscsi:10.0.2.15::::iqn.2023-10.coreos.target.vm:coreos

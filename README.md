@@ -86,7 +86,7 @@ We'll need an iPXE boot script:
 ``` 
 $ cat /mnt/workdir-tmp/boot.ipxe
 #!ipxe
-sanboot iscsi:10.0.2.15::::iqn.2023-10.coreos.target.vm:core
+sanboot iscsi:10.0.2.15::::iqn.2023-10.coreos.target.vm:coreos
 ```
 
 Then boot !
@@ -104,8 +104,8 @@ The setup target in the ignition config is `iqn.2023-10.coreos.target.vm:coreos`
 So on the initator, to mount the volume
 Discover : 
 ```
-# iscsiadm -m discovery -t st -p 192.168.122.2
-10.88.0.2:3260,1 iqn.2023-10.coreos.target.vm:coreos
+# sudo  iscsiadm -m discovery -t st -p 10.0.2.15
+10.0.2.15:3260,1 iqn.2023-10.coreos.target.vm:coreos
 ```
 Mount :
 ```
