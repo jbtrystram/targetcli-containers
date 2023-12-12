@@ -13,7 +13,7 @@ AddCapability=CAP_SYS_MODULE
 Network=host
 Volume=/lib/modules:/lib/modules
 Volume=/sys/kernel/config:/sys/kernel/config
-Volume=/var/mnt/workdir-tmp/:/var/mnt/workdir-tmp/
+Volume=/dev/disk/by-id/virtio-target:/dev/disk/by-id/virtio-target
 PodmanArgs=--privileged
 
 [Install]

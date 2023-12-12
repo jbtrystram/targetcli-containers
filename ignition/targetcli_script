@@ -1,9 +1,9 @@
 #!/bin/bash
 
 podman exec target bash -exc "
-  targetcli /backstores/fileio create coreos /var/mnt/workdir-tmp/fcos.raw
+  targetcli /backstores/block create name=coreos dev=/dev/disk/by-id/virtio-target
   targetcli iscsi/ create iqn.2023-10.coreos.target.vm:coreos
-  targetcli iscsi/iqn.2023-10.coreos.target.vm:coreos/tpg1/luns create /backstores/fileio/coreos
+  targetcli iscsi/iqn.2023-10.coreos.target.vm:coreos/tpg1/luns create /backstores/block/coreos
   targetcli iscsi/iqn.2023-10.coreos.target.vm:coreos/tpg1/ set attribute authentication=0 demo_mode_write_protect=0 generate_node_acls=1 cache_dynamic_acls=1
 "
 

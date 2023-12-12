@@ -1,6 +1,13 @@
 variant: fcos
 version: 1.5.0
 storage:
+  filesystems:
+    - path: /var
+      device: /dev/disk/by-id/virtio-var
+      format: ext4
+      wipe_filesystem: true
+      label: var
+      with_mount_unit: true
   files:
     - path: /etc/containers/systemd/target.container
       contents:
@@ -9,19 +16,39 @@ storage:
       contents:
         local: targetcli_script
       mode: 0755
-    - path: /mnt/temp/boot.ipxe
-      contents:
-        local: boot.ipxe
-      mode: 0644  
-    - path: /etc/containers/systemd/iscsi-boot.container
-      contents:
-        local: iscsi-boot.container
-    - path: /usr/local/bin/bootup-validator
+    - path: /usr/local/bin/install-coreos-iscsi
       mode: 0755
       contents:
-        local: bootup-validator.sh
+        inline: |
+          #!/bin/bash
+          set -euxo
+          # Mount the iscsi target
+          iscsiadm -m discovery -t st -p 127.0.0.1
+          iscsiadm -m node -T iqn.2023-10.coreos.target.vm:coreos -l
+          # Give a bit of time to udev to create the persistent names paths
+          sleep 2 
+          # Install coreos
+          coreos-installer install \
+            /dev/disk/by-path/ip-127.0.0.1\:3260-iscsi-iqn.2023-10.coreos.target.vm\:coreos-lun-0 \
+            --append-karg rd.iscsi.firmware=1 --append-karg ip=ibft \
+            --console ttyS0 
+          # Unmount the disk
+          iscsiadm --mode node --logoutall=all
 systemd:
   units:
     - name: setup-targetcli.service
       enabled: true
       contents_local: setup-targetcli.service
+    - name: install-coreos-to-iscsi-target.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Mount an iscsi target and install coreOS into it
+        Requires=setup-targetcli.service
+        After=setup-targetcli.service
+        [Service]
+        Type=oneshot
+        RemainAfterExit=yes
+        ExecStart=/usr/local/bin/install-coreos-iscsi
+        [Install]
+        WantedBy=multi-user.target

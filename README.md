@@ -31,11 +31,9 @@ If you want to run the container on its own (without through the ignition config
 # podman run -d \
 	--name targetclid \
 	-v /lib/modules:/lib/modules \
-	-v /var/run/dbus:/var/run/dbus \
     -v /sys/kernel/config:/sys/kernel/config \
 	--privileged --cap-add=CAP_SYS_MODULE \
 	--net host \
-	-v /var/shared/fcos.raw:/fcos.raw \
 	quay.io/jbtrystram/targetcli
 ```
 then `podman exec -it targetclid targetcli`, you can then create portals, luns and all iSCSI things.
